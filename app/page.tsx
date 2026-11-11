@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import {
-  FaDiscord,
+  FaTiktok,
   FaEye,
   FaChartLine,
   FaYoutube,
@@ -317,13 +317,13 @@ export default function Home() {
         )}
 
         <div className="flex gap-4 sm:gap-6 text-lg sm:text-2xl mt-4 sm:mt-6 text-white/80">
-          <a 
-            href="YOUR_DISCORD_URL" 
-            target="_blank" 
+          <a
+            href="https://www.tiktok.com/@GANTI_USERNAME"
+            target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white transition"
           >
-            <FaDiscord />
+            <FaTiktok />
           </a>
           <a 
             href="https://www.youtube.com/@HmamNuqi" 
