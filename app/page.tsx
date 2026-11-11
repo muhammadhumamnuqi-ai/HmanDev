@@ -318,7 +318,7 @@ export default function Home() {
 
         <div className="flex gap-4 sm:gap-6 text-lg sm:text-2xl mt-4 sm:mt-6 text-white/80">
           <a
-            href="https://www.tiktok.com/@GANTI_USERNAME"
+            href="https://www.tiktok.com/@hmamnuqi"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white transition"
