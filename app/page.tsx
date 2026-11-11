@@ -12,6 +12,7 @@ import {
 
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
+import Image from "next/image";
 import { Playfair_Display } from "next/font/google";
 import { Outfit } from "next/font/google";
 
@@ -120,7 +121,7 @@ export default function Home() {
   const avatarUrl =
     presence?.discord_user?.avatar
       ? `https://cdn.discordapp.com/avatars/${presence.discord_user.id}/${presence.discord_user.avatar}.png?size=256`
-      : null;
+      : "/favicon.png";
 
   const decorationUrl =
     presence?.discord_user?.avatar_decoration_data?.asset
@@ -166,17 +167,21 @@ export default function Home() {
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4 py-6">
         <div className="relative w-20 h-20 sm:w-28 sm:h-28 flex items-center justify-center">
           {avatarUrl && (
-            <img
+            <Image
               src={avatarUrl}
               alt="avatar"
+              width={96}
+              height={96}
               className="w-16 h-16 sm:w-24 sm:h-24 rounded-full border-2 border-white/30 shadow-xl z-10"
             />
           )}
 
           {decorationUrl && (
-            <img
+            <Image
               src={decorationUrl}
               alt="decoration"
+              width={144}
+              height={144}
               className="absolute w-24 h-24 sm:w-36 sm:h-36 object-contain pointer-events-none z-20"
             />
           )}
@@ -248,9 +253,11 @@ export default function Home() {
           <div className="mt-3 sm:mt-5 backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl px-3 py-2 sm:px-6 sm:py-4 flex items-center gap-2 sm:gap-4 shadow-xl w-full max-w-[260px] sm:max-w-xs">
             {avatarUrl && (
               <div className="relative flex-shrink-0">
-                <img
+                <Image
                   src={avatarUrl}
                   alt="avatar"
+                  width={48}
+                  height={48}
                   className="w-9 h-9 sm:w-12 sm:h-12 rounded-full"
                 />
                 <span
