@@ -54,6 +54,29 @@ export default function Home() {
 
   const displayName = "Hmam";
 
+  const [visitorCount, setVisitorCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    let visitorId = localStorage.getItem("visitorId");
+    if (!visitorId) {
+      visitorId = crypto.randomUUID();
+      localStorage.setItem("visitorId", visitorId);
+    }
+
+    fetch("/api/visitors", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ visitorId }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (typeof data?.count === "number") {
+          setVisitorCount(data.count);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   useEffect(() => {
     initParticlesEngine(async (engine) => {
       await loadSlim(engine);
@@ -322,6 +345,12 @@ export default function Home() {
             <FaGithub />
           </a>
         </div>
+
+        {visitorCount !== null && (
+          <p className="mt-3 sm:mt-4 text-[10px] sm:text-xs text-white/40 tracking-wider uppercase">
+            {visitorCount.toLocaleString("id-ID")} pengunjung
+          </p>
+        )}
       </div>
     </div>
   );
