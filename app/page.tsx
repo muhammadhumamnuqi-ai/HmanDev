@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   FaDiscord,
   FaEye,
+  FaChartLine,
   FaYoutube,
   FaGlobe,
   FaGithub,
@@ -55,7 +56,10 @@ export default function Home() {
 
   const displayName = "Hmam";
 
-  const [visitorCount, setVisitorCount] = useState<number | null>(null);
+  const [visitorCount, setVisitorCount] = useState<{
+    unique: number;
+    total: number;
+  } | null>(null);
 
   useEffect(() => {
     let visitorId = localStorage.getItem("visitorId");
@@ -71,8 +75,8 @@ export default function Home() {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (typeof data?.count === "number") {
-          setVisitorCount(data.count);
+        if (typeof data?.unique === "number" && typeof data?.total === "number") {
+          setVisitorCount({ unique: data.unique, total: data.total });
         }
       })
       .catch(() => {});
@@ -348,11 +352,19 @@ export default function Home() {
         </div>
 
         {visitorCount !== null && (
-          <div className="mt-3 sm:mt-4 flex items-center gap-2 text-white/50">
-            <FaEye className="w-4 h-4 sm:w-4 sm:h-4" />
-            <span className="text-xs sm:text-sm font-medium tracking-wider">
-              {visitorCount.toLocaleString("id-ID")}
-            </span>
+          <div className="mt-3 sm:mt-4 flex items-center gap-4 sm:gap-5 text-white/50">
+            <div className="flex items-center gap-2">
+              <FaEye className="w-4 h-4" />
+              <span className="text-xs sm:text-sm font-medium tracking-wider">
+                {visitorCount.unique.toLocaleString("id-ID")}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <FaChartLine className="w-4 h-4" />
+              <span className="text-xs sm:text-sm font-medium tracking-wider">
+                {visitorCount.total.toLocaleString("id-ID")}
+              </span>
+            </div>
           </div>
         )}
       </div>

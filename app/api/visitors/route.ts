@@ -34,15 +34,24 @@ export async function POST(request: Request) {
     );
     const markData = await markRes.json();
 
-    if (markData.result === "OK") {
-      const incrRes = await fetch(`${url}/incr/visitors:unique`, { headers });
-      const incrData = await incrRes.json();
-      return NextResponse.json({ count: incrData.result, isNew: true });
-    }
+    const getUniqueRes = await fetch(
+      markData.result === "OK"
+        ? `${url}/incr/visitors:unique`
+        : `${url}/get/visitors:unique`,
+      { headers }
+    );
+    const uniqueData = await getUniqueRes.json();
+    const unique = Number(uniqueData.result);
 
-    const getRes = await fetch(`${url}/get/visitors:unique`, { headers });
-    const getData = await getRes.json();
-    return NextResponse.json({ count: Number(getData.result), isNew: false });
+    const totalRes = await fetch(`${url}/incr/visitors:total`, { headers });
+    const totalData = await totalRes.json();
+    const total = Number(totalData.result);
+
+    return NextResponse.json({
+      unique,
+      total,
+      isNew: markData.result === "OK",
+    });
   } catch {
     return NextResponse.json(
       { error: "Counter unavailable" },
