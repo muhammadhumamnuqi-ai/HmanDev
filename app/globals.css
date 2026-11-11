@@ -1,0 +1,154 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+* {
+  cursor: url('/cursor.png') 0 0, auto !important;
+}
+
+*:active {
+  cursor: url('/cursor.png') 0 0, auto !important;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+@media (max-height: 640px) {
+  body {
+    overflow-y: auto;
+  }
+}
+
+.profile-frame {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: grid;
+  place-items: center;
+}
+
+.profile-halo {
+  position: absolute;
+  top: -16px;
+  width: 70px;
+  height: 18px;
+  border-radius: 9999px;
+  border: 2px solid rgba(253, 224, 71, 0.9);
+  box-shadow: 0 0 12px rgba(253, 224, 71, 0.6);
+  background: rgba(253, 224, 71, 0.08);
+  animation: float-halo 3.5s ease-in-out infinite;
+}
+
+.profile-wings {
+  position: absolute;
+  width: 160px;
+  height: 80px;
+  top: 14px;
+  pointer-events: none;
+}
+
+.profile-wing {
+  position: absolute;
+  width: 62px;
+  height: 46px;
+  border-radius: 60% 60% 40% 40%;
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.35);
+  animation: flap 2.8s ease-in-out infinite;
+}
+
+.profile-wing.left {
+  left: -10px;
+  transform: rotate(-18deg);
+}
+
+.profile-wing.right {
+  right: -10px;
+  transform: rotate(18deg) scaleX(-1);
+}
+
+.profile-avatar {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.85);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(168, 85, 247, 0.4));
+}
+
+@keyframes float-halo {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes flap {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(-18deg);
+  }
+  50% {
+    transform: translateY(-3px) rotate(-8deg);
+  }
+}
+
+.profile-wing.right {
+  animation: flap-right 2.8s ease-in-out infinite;
+}
+
+@keyframes flap-right {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(18deg) scaleX(-1);
+  }
+  50% {
+    transform: translateY(-3px) rotate(8deg) scaleX(-1);
+  }
+}
