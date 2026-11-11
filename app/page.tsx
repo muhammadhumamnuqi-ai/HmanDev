@@ -49,6 +49,7 @@ export default function Home() {
   const [particlesReady, setParticlesReady] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   const displayName = "Hmam";
 
@@ -77,26 +78,32 @@ export default function Home() {
   }, [userId]);
 
   useEffect(() => {
-    if (!videoRef.current) return;
-    videoRef.current.muted = muted;
-    videoRef.current.volume = muted ? 0 : 0.5;
+    if (!audioRef.current) return;
+    audioRef.current.muted = muted;
+    audioRef.current.volume = muted ? 0 : 0.5;
   }, [muted]);
 
   useEffect(() => {
-    if (!entered || !videoRef.current) return;
+    if (!entered) return;
+
+    // Video always plays muted (visual only)
     const video = videoRef.current;
-    // Play muted first (always allowed by browsers)
-    video.muted = true;
-    video.volume = 0;
-    video.play().then(() => {
-      // After playback starts, try to unmute
-      video.muted = false;
-      video.volume = 0.5;
-      setMuted(false);
-    }).catch(() => {
-      // Stay muted if browser still blocks
-      setMuted(true);
-    });
+    if (video) {
+      video.muted = true;
+      video.volume = 0;
+      video.play().catch(() => {});
+    }
+
+    // Audio plays from the "enter" click (counts as user gesture)
+    const audio = audioRef.current;
+    if (audio) {
+      audio.muted = false;
+      audio.volume = 0.5;
+      audio
+        .play()
+        .then(() => setMuted(false))
+        .catch(() => setMuted(true));
+    }
   }, [entered]);
 
   const handleEnter = () => {
@@ -144,6 +151,8 @@ export default function Home() {
         preload="auto"
         className="absolute inset-0 w-full h-full object-cover -z-20"
       />
+
+      <audio ref={audioRef} src="/media/track.mp3" loop preload="auto" />
 
       <div className="absolute inset-0 bg-black/70 -z-10" />
 
