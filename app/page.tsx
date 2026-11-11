@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   FaDiscord,
+  FaEye,
   FaYoutube,
   FaGlobe,
   FaGithub,
@@ -347,9 +348,12 @@ export default function Home() {
         </div>
 
         {visitorCount !== null && (
-          <p className="mt-3 sm:mt-4 text-[10px] sm:text-xs text-white/40 tracking-wider uppercase">
-            {visitorCount.toLocaleString("id-ID")} pengunjung
-          </p>
+          <div className="mt-3 sm:mt-4 flex items-center gap-2 text-white/50">
+            <FaEye className="w-4 h-4 sm:w-4 sm:h-4" />
+            <span className="text-xs sm:text-sm font-medium tracking-wider">
+              {visitorCount.toLocaleString("id-ID")}
+            </span>
+          </div>
         )}
       </div>
     </div>
